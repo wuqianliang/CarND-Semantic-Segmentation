@@ -103,7 +103,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
     Generate test output using the test images
     :param sess: TF session
     :param logits: TF Tensor for the logits
-    :param keep_prob: TF Placeholder for the dropout keep robability
+    :param keep_prob: TF Placeholder for the dropout keep probability
     :param image_pl: TF Placeholder for the image placeholder
     :param data_folder: Path to the folder that contains the datasets
     :param image_shape: Tuple - Shape of image
@@ -136,5 +136,6 @@ def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_p
     print('Training Finished. Saving test images to: {}'.format(output_dir))
     image_outputs = gen_test_output(
         sess, logits, keep_prob, input_image, os.path.join(data_dir, 'data_road/testing'), image_shape)
+        #sess, logits, keep_prob, input_image, os.path.join(data_dir, 'data_road/testing/video'), image_shape)
     for name, image in image_outputs:
         scipy.misc.imsave(os.path.join(output_dir, name), image)
