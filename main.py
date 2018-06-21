@@ -6,7 +6,6 @@ from distutils.version import LooseVersion
 import project_tests as tests
 
 
-
 # Check TensorFlow Version
 assert LooseVersion(tf.__version__) >= LooseVersion('1.0'), 'Please use TensorFlow version 1.0 or newer.  You are using {}'.format(tf.__version__)
 print('TensorFlow Version: {}'.format(tf.__version__))
@@ -143,9 +142,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,beta1=0.9,beta2=0.999,epsilon=1e-08,use_locking=False,name='Adam')
     reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
     loss = cross_entropy_loss + l2_const * sum(reg_losses)
-
     train_op = optimizer.minimize(loss=loss)
-
     return logits, train_op, loss
 
 tests.test_optimize(optimize)
@@ -200,20 +197,18 @@ def run():
     # Download pretrained vgg model
     helper.maybe_download_pretrained_vgg(data_dir)
 
-    epochs = 200
+    epochs = 100
     batch_size = 16
 
-    #do_inference_only = True
-
-    # CAREFUL: this removes ALL models and log results of the last run
+    # Remove all the model and logs from last run
     if tf.gfile.Exists(model_dir):
         tf.gfile.DeleteRecursively(model_dir)
     tf.gfile.MakeDirs(model_dir)
 
     # hyperparameter search
-    for l2_const in [0.002,0.005]:
-        for lrate in [0.0001,0.00005]:
-            for kprob in [0.8,0.9]:
+    for l2_const in [0.01,0.002,0.005]:
+        for lrate in [0.001,0.0001,0.00005]:
+            for kprob in [0.5,0.8,0.9]:
 
                 hparam = "kp_%.0E,lr_%.0E,l2_%.0E" % (kprob, lrate, l2_const)
 
