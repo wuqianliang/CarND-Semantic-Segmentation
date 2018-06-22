@@ -6,6 +6,8 @@ from distutils.version import LooseVersion
 import project_tests as tests
 
 
+logfile='./train.log'
+
 # Check TensorFlow Version
 assert LooseVersion(tf.__version__) >= LooseVersion('1.0'), 'Please use TensorFlow version 1.0 or newer.  You are using {}'.format(tf.__version__)
 print('TensorFlow Version: {}'.format(tf.__version__))
@@ -15,7 +17,6 @@ if not tf.test.gpu_device_name():
     warnings.warn('No GPU found. Please use a GPU to train your neural network.')
 else:
     print('Default GPU Device: {}'.format(tf.test.gpu_device_name()))
-
 
 def load_vgg(sess, vgg_path):
     """
@@ -147,6 +148,9 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const)
 
 tests.test_optimize(optimize)
 
+def fwrite(logfile, str_to_write):
+    with open(logfile, 'a') as f:
+        f.write(str_to_write+'\n')
 
 def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
              correct_label, keep_prob, learning_rate, kprob, lrate):
@@ -178,7 +182,8 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
                                             keep_prob: kprob,
                                             learning_rate: lrate})
 
-            if counter % 10 == 0:
+            if counter % 20 == 0:
+                fwrite(logfile, "loss " + str(loss) +  " epoch_i "  + str(epoch_i) +  " epochs " + str(epochs) +  " counter " + str(counter))
                 print("loss", loss, " epoch_i ", epoch_i, " epochs ", epochs,  " counter ",counter)
 
             counter += 1                
@@ -197,8 +202,9 @@ def run():
     # Download pretrained vgg model
     helper.maybe_download_pretrained_vgg(data_dir)
 
-    epochs = 100
+    epochs = 200
     batch_size = 16
+
 
     # Remove all the model and logs from last run
     if tf.gfile.Exists(model_dir):
@@ -211,7 +217,7 @@ def run():
             for kprob in [0.5,0.8,0.9]:
 
                 hparam = "kp_%.0E,lr_%.0E,l2_%.0E" % (kprob, lrate, l2_const)
-
+                fwrite(logfile,'Starting run for %s' + hparam)
                 print('Starting run for %s' % hparam)
                 model_path = model_dir + hparam + "/model"
 
@@ -248,7 +254,8 @@ def run():
                          correct_label, keep_prob, learning_rate, kprob, lrate)
 
                     save_path = saver.save(sess, model_path)
-                    print("Model saved in path: %s" % save_path)
+                    fwrite(logfile,"Model saved in path: " + save_path)
+                    print("Model saved in path: %s" + save_path)
 
                     # TODO: Save inference data using helper.save_inference_samples
                     helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
