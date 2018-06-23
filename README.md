@@ -18,6 +18,7 @@ Yes, in `line 21` and `line 240` we implement and invoke the `load_vgg()` functi
 #### Does the project learn the correct features from the images?
 Yes, I implement final layer like following:
 `
+
 def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
 
     layer7_1x1 = conv_1x1(vgg_layer7_out,num_classes)
@@ -37,7 +38,9 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     
     return model
 `
-#### Does the project optimize the neural network?
+in function layers, we first add 1x1 conv by pool7 and upsample to get layer7_up, add skip of pool4 1x1 conv and layer7_up,then do the same to pool4, then do upsample to layer3_skip to get final modified model. I do the same way as FCN paper described.
+
+ #### Does the project optimize the neural network?
 
 #### Does the project train the neural network?
 
