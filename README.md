@@ -98,6 +98,11 @@ made final loss=0.0058767293 after 200 round trainning.
 #### Does the project correctly label the road?
 Yes,the following labeled images showed the label effects.
 
+![Alt text](https://github.com/wuqianliang/CarND-Semantic-Segmentation/blob/master/images/um_000044.png "Optional title")
+![Alt text](https://github.com/wuqianliang/CarND-Semantic-Segmentation/blob/master/images/um_000024.png "Optional title")
+![Alt text](https://github.com/wuqianliang/CarND-Semantic-Segmentation/blob/master/images/um_000092.png "Optional title")
+
+
 ---
 # Original Readme
 # Semantic Segmentation
