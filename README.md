@@ -1,4 +1,4 @@
-# Semantic Segmentation Porject
+# Semantic Segmentation Project
 Self-Driving Car Engineer Nanodegree Program
 
 ---
