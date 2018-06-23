@@ -88,11 +88,15 @@ Yes during trainning, the model script print loss:
 Yes, the loss decreases when trainning. like the answer of last check question.
     
 #### Does the project use reasonable hyperparameters?
-
-
+Yes, I do the hyperparameters searching of the learning rate ,keep proportion,and the const coeff of L2-Loss.
+As we see after searching, we found that 
+    learning rate= 0.0001
+    keep proportion = 0.5
+    L2-Loss coeff = 0.01
+made final loss=0.0058767293 after 200 round trainning.
 
 #### Does the project correctly label the road?
-
+Yes,the following labeled images showed the label effects.
 
 ---
 # Original Readme
