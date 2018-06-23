@@ -17,8 +17,8 @@ In this project ,I implemented a model to make pixel level classification.I use 
 Yes, in `line 21` and `line 240` we implement and invoke the `load_vgg()` function to load pretrained vgg model and get the pool_7,pool_4,pool_3 layers and input layer.  
 #### Does the project learn the correct features from the images?
 Yes, I implement final layer like following:
-`
 
+`
 def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
 
     layer7_1x1 = conv_1x1(vgg_layer7_out,num_classes)
@@ -40,7 +40,21 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
 `
 in function layers, we first add 1x1 conv by pool7 and upsample to get layer7_up, add skip of pool4 1x1 conv and layer7_up,then do the same to pool4, then do upsample to layer3_skip to get final modified model. I do the same way as FCN paper described.
 
- #### Does the project optimize the neural network?
+#### Does the project optimize the neural network?
+I use the cross_entropy_loss and L2 regularization penalty on loss.
+
+`
+def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const):
+    logits = tf.reshape(nn_last_layer, [-1,num_classes])
+    labels = tf.reshape(correct_label,[-1,num_classes])
+    cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = labels,logits = logits))
+    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,beta1=0.9,beta2=0.999,epsilon=1e-08,use_locking=False,name='Adam')
+    reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
+    loss = cross_entropy_loss + l2_const * sum(reg_losses)
+    train_op = optimizer.minimize(loss=loss)
+    return logits, train_op, loss
+`
+
 
 #### Does the project train the neural network?
 
