@@ -14,12 +14,37 @@ In this project ,I implemented a model to make pixel level classification.I use 
 
 ### Rubic
 #### Does the project load the pretrained vgg model?
-
+Yes, in `line 21` and `line 240` we implement and invoke the `load_vgg()` function to load pretrained vgg model and get the pool_7,pool_4,pool_3 layers and input layer.  
 #### Does the project learn the correct features from the images?
+Yes, I implement final layer like following:
+`
+def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
+
+    layer7_1x1 = conv_1x1(vgg_layer7_out,num_classes)
+    layer4_1x1 = conv_1x1(vgg_layer4_out,num_classes)
+    layer3_1x1 = conv_1x1(vgg_layer3_out,num_classes)
+
+    # FCN-32s
+    layer7_up = upsample(layer7_1x1,num_classes,5,2) 
+    layer4_skip = skip_layer(layer7_up,layer4_1x1)
+
+    # FCN-16s
+    layer4_up = upsample(layer4_skip,num_classes,5,2)
+    layer3_skip = skip_layer(layer4_up,layer3_1x1)
+
+    # # FCN-8s
+    model = upsample(layer3_skip, num_classes,16,8)
+    
+    return model
+`
 #### Does the project optimize the neural network?
+
 #### Does the project train the neural network?
+
 #### Does the project train the model correctly?
+
 #### Does the project use reasonable hyperparameters?
+
 #### Does the project correctly label the road?
 
 
