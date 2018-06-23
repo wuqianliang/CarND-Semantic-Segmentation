@@ -8,7 +8,7 @@ In this project ,I implemented a model to make pixel level classification.I use 
 ## Project steps
 1. Pepraring the vgg pretrained model and  trainning & testing datasets.
 2. Load pretrained model and use 1x1 conv,upsample and skip layers to build new network.
-3. Build optimize objects like loss etc.
+3. Build tf objects like loss, loss minimization etc.
 4. Use batch_size=16 and epochs=200 to train modified layer, and also do hyperparameter(learning rate,keep proportion,l2 coeff) search.
 5. Make inference on test images.
 
