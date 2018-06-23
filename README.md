@@ -3,6 +3,7 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 ## Overview
+In this project ,I implemented a model to make pixel level classification.I use 1x1 convolution on the vgg_layer7,vgg_layer4,vgg_layer3 ,made upsample from them and build skip layers between them. 
 
 
 ## Project steps
