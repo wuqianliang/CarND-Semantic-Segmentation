@@ -11,6 +11,9 @@ from glob import glob
 from urllib.request import urlretrieve
 from tqdm import tqdm
 
+def fwrite(logfile, str_to_write):
+    with open(logfile, 'a') as f:
+        f.write(str_to_write+'\n')
 
 class DLProgress(tqdm):
     last_block = 0
@@ -132,6 +135,7 @@ def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_p
         shutil.rmtree(output_dir)
     os.makedirs(output_dir)
 
+    fwrite('train.log','Training Finished. Saving test images to: {}'.format(output_dir))
     # Run NN on test images and save them to HD
     print('Training Finished. Saving test images to: {}'.format(output_dir))
     image_outputs = gen_test_output(
