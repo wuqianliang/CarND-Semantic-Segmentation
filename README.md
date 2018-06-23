@@ -18,7 +18,7 @@ Yes, in `line 21` and `line 240` we implement and invoke the `load_vgg()` functi
 #### Does the project learn the correct features from the images?
 Yes, I implement final layer like following:
 
-    `def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes)
+    def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes)
     layer7_1x1 = conv_1x1(vgg_layer7_out,num_classes)
     layer4_1x1 = conv_1x1(vgg_layer4_out,num_classes)
     layer3_1x1 = conv_1x1(vgg_layer3_out,num_classes)
@@ -35,13 +35,13 @@ Yes, I implement final layer like following:
     model = upsample(layer3_skip, num_classes,16,8)
     
     return model
-    `
+
 in function layers, we first add 1x1 conv by pool7 and upsample to get layer7_up, add skip of pool4 1x1 conv and layer7_up,then do the same to pool4, then do upsample to layer3_skip to get final modified model. I do the same way as FCN paper described.
 
 #### Does the project optimize the neural network?
 I use the cross_entropy_loss and L2 regularization penalty on loss.
 
-    `def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const)
+    def optimize(nn_last_layer, correct_label, learning_rate, num_classes, l2_const)
 
     logits = tf.reshape(nn_last_layer, [-1,num_classes])
     labels = tf.reshape(correct_label,[-1,num_classes])
@@ -54,14 +54,42 @@ I use the cross_entropy_loss and L2 regularization penalty on loss.
     train_op = optimizer.minimize(loss=loss)
     
     return logits, train_op, loss
-    `
-
-
+    
 #### Does the project train the neural network?
+Yes during trainning, the model script print loss:
+
+    Starting run for kp_5E-01,lr_1E-04,l2_1E-02
+    2018-06-23 16:47:07.441711: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Creating TensorFlow device (/gpu:0) -> (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:01:00.0)
+    loss 0.38728118  epoch_i  1  epochs  200  counter  20
+    loss 0.18524675  epoch_i  2  epochs  200  counter  40
+    loss 0.16316253  epoch_i  3  epochs  200  counter  60
+    loss 0.14614113  epoch_i  4  epochs  200  counter  80
+    loss 0.16411816  epoch_i  5  epochs  200  counter  100
+    loss 0.13614361  epoch_i  6  epochs  200  counter  120
+    loss 0.11559493  epoch_i  7  epochs  200  counter  140
+    loss 0.11490484  epoch_i  8  epochs  200  counter  160
+    loss 0.0668481  epoch_i  9  epochs  200  counter  180
+    loss 0.06830554  epoch_i  10  epochs  200  counter  200
+    loss 0.06855286  epoch_i  11  epochs  200  counter  220
+    loss 0.06652438  epoch_i  12  epochs  200  counter  240
+    loss 0.07009909  epoch_i  13  epochs  200  counter  260
+    loss 0.045881167  epoch_i  14  epochs  200  counter  280
+    loss 0.057495188  epoch_i  15  epochs  200  counter  300
+    loss 0.07169177  epoch_i  16  epochs  200  counter  320
+    loss 0.06764566  epoch_i  17  epochs  200  counter  340
+    loss 0.05766602  epoch_i  18  epochs  200  counter  360
+    loss 0.038915638  epoch_i  19  epochs  200  counter  380
+    loss 0.03408567  epoch_i  21  epochs  200  counter  400
+    loss 0.05065194  epoch_i  22  epochs  200  counter  420
+    loss 0.041606896  epoch_i  23  epochs  200  counter  440
+
 
 #### Does the project train the model correctly?
-
+Yes, the loss decreases when trainning. like the answer of last check question.
+    
 #### Does the project use reasonable hyperparameters?
+
+
 
 #### Does the project correctly label the road?
 
