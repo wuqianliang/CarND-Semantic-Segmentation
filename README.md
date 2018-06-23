@@ -3,7 +3,7 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 ## Overview
-In this project ,I implemented a model to make pixel level classification.I use 1x1 convolution on the vgg_layer7,vgg_layer4,vgg_layer3 ,upsample these three layers and iteratively build skip layers between upsampled and original pool layers. Also I used normalized initial parameters.
+In this project ,I implemented a model to make pixel level classification.I use 1x1 convolution on the vgg_layer7,vgg_layer4,vgg_layer3 ,upsample these three layers and iteratively build skip layers between upsampled and original pool layers. Also I used normalized initial parameters and regularization l2 losses in every new layer.
 
 ## Project steps
 1. Pepraring the vgg pretrained model and  trainning & testing datasets.
