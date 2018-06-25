@@ -86,7 +86,22 @@ Yes during trainning, the model script print loss:
 
 
 #### Does the project train the model correctly?
-Yes, the loss decreases when trainning. like the answer of last check question.
+Yes, the loss decreases when trainning:
+
+    loss 0.017175457 epoch_i 188 epochs 200 counter 3580 
+    loss 0.017048566 epoch_i 189 epochs 200 counter 3600 
+    loss 0.01274084 epoch_i 190 epochs 200 counter 3620 
+    loss 0.015761087 epoch_i 191 epochs 200 counter 3640 
+    loss 0.009665441 epoch_i 192 epochs 200 counter 3660 
+    loss 0.009468366 epoch_i 193 epochs 200 counter 3680 
+    loss 0.009596125 epoch_i 194 epochs 200 counter 3700 
+    loss 0.009907771 epoch_i 195 epochs 200 counter 3720 
+    loss 0.00977212 epoch_i 196 epochs 200 counter 3740 
+    loss 0.010752921 epoch_i 197 epochs 200 counter 3760 
+    loss 0.008895747 epoch_i 198 epochs 200 counter 3780 
+    loss 0.005522505 epoch_i 199 epochs 200 counter 3800 
+    Model saved in path: ./models/kp_5E-01,lr_1E-04,l2_5E-03/model
+with keep_portion=0.5,learning_rate=0.0001 and l2_coeff=0.005, model get the lowest train loss.
     
 #### Does the project use reasonable hyperparameters?
 Yes, I do the hyperparameters searching of the learning rate ,keep proportion,and the const coeff of L2-Loss.
